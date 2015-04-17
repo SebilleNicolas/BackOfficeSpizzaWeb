@@ -16,9 +16,9 @@ function connexion()
 	try {
 
 			$pdo = new PDO( 
-			'mysql:host=127.0.0.1;dbname=spizza', 
+			'mysql:host=localhost;dbname=spizza', 
 			'root',
-			'root'
+			'' //mdp : root
 			); 
 			$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 	
@@ -30,7 +30,7 @@ function connexion()
 			error_log($messageErreur,0);
 			
 		}
-	
+	// var_dump($pdo);exit;
 	return $pdo ;
 
 	
@@ -135,6 +135,33 @@ function listePizza()
 		$listePizza = "
 						SELECT *
 						FROM pizza
+						
+						
+					";
+		//mysql_query("SET NAMES 'utf8'");
+		$result = $pdo -> query($listePizza)->fetchall();
+		
+	}
+
+	return $result;
+		
+}
+/************** Fonction d'obention de la liste des Ingredients **************/
+function listeIngredient()
+{
+	mb_internal_encoding('UTF-8');
+	$result = false;
+	
+	$pdo = connexion();
+	
+	
+	
+	if($pdo != false)
+	{
+		
+		$listePizza = "
+						SELECT *
+						FROM ingredient
 						
 						
 					";

@@ -37,7 +37,13 @@ header('Content-Type: text/html; charset=UTF-8');
 		echo '<script type="text/javascript">window.alert("'.$message.'");</script>';	
 		header( 'Refresh:2; url=ListePizza.php');
 	}
-	
+		if(isset($_POST['AjouterIngredient']))
+	{
+		// var_dump($_REQUEST);exit;
+		$id = $_REQUEST['AjouterIngredient'];
+		// var_dump($id);exit;
+		header("Location: AjouterIngredient.php?id=$id");
+	}
 ?>
 
 <div class="contenu" >
@@ -74,6 +80,9 @@ Liste des pizzas :
 			<th>
 				Ingredient
 			</th>
+				<th>
+				Ajouter Ingredient
+			</th>
 			<th>
 				Prix
 			</th>
@@ -102,6 +111,9 @@ Liste des pizzas :
 			</td>
 			<td>
 			
+			</td>
+			<td>
+				<input type="submit" name="AjouterIngredient" class="ajouter" value="<?php echo $ListePizza[$i]["CodePizza"] ?>" />
 			</td>
 			<td>
 			<?php echo $ListePizza[$i]["Prix"]?> 
