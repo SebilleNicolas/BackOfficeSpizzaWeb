@@ -19,7 +19,7 @@ header('Content-Type: text/html; charset=UTF-8');
 	
 	include '../html/menuAdministrateur.html';
 		
-		
+		$CodeSalade = $_REQUEST["id"];
 	// var_dump($_REQUEST);
 	$salade = ConsulterSalade($_REQUEST["id"]);
 	// var_dump($pizza);
@@ -46,6 +46,28 @@ header('Content-Type: text/html; charset=UTF-8');
 		echo '<script type="text/javascript">window.alert("'.$message.'");</script>';	
 		header( 'Refresh:2; url=ListeSalade.php');
 		}	
+	}
+	
+		if(isset($_POST['AjouterIngredientSalade']))
+	{
+		$CodePizza = $_REQUEST['AjouterIngredientSalade'];
+		// var_dump($CodePizza);exit;
+		header("Location:  AjouterIngredientSalade.php?id=$CodeSalade");
+	}
+	
+	if(isset($_POST['ss']))
+	{
+		$CodeSalade = $_REQUEST['id'];
+		$CodeIngredient = $_REQUEST['CodeIngredient'];
+
+		//suppression de l'ingredient d'une Pate 
+
+		$reussi = suprIngredientSalade($CodeSalade, $CodeIngredient);
+
+		if($reussi = false){$message='Erreur Ingredient non supprimer'; echo '<script type="text/javascript">window.alert("'.$message.'");</script>';}
+		
+		
+		if($reussi = true){$message='Ingredient supprimer'; echo '<script type="text/javascript">window.alert("'.$message.'");</script>';}
 	}
 	
 	
@@ -113,4 +135,62 @@ header('Content-Type: text/html; charset=UTF-8');
 		</tbody>
 		
 	</table>
+</form>
+
+
+
+
+</br>
+<h3>
+	Ingredient
+</h3>
+</br>
+<form method="POST" action="">
+<table class="ficheCourante">
+	<thead>
+		<tr>
+			<th>
+			<h4>
+				Ajouter un Ingredient :
+			<h4>
+			</th>
+			<th>
+				<input type="submit" name="AjouterIngredientSalade" value="<?php echo $CodeSalade; ?>" class="modifier" />
+			</th>
+		</tr>
+	</thead>
+</table>
+</form>	
+</br>
+		
+<form method="POST" action="">
+<table class="ficheCourante">
+	<thead class="thead">			
+		<tr>
+			<th>
+				Ingredient
+			</th>
+			<th>
+				Suprimmer
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php 
+	$listeIngredientPate = listeIngredientSalade($CodeSalade);
+	// var_dump ($listeIngredientPate);exit;
+	for ($i = 0; $i < count($listeIngredientPate); $i++) { 
+	?>
+		<tr>
+			<td>
+				<input type="hidden"  name="CodeIngredient" value=" <?php echo $listeIngredientPate[$i]["CodeIngredient"];?>" /> 
+				<input type="text" style="width: 220px;" name="NomPate" class="modification" value="<?php echo $listeIngredientPate[$i]["NomIngredient"];?>" /> 
+			</td>
+			<td>
+				<input type="submit" name="ss" value="<?php echo $CodeSalade; ?>" class="refuser" />
+			</td>
+		</tr>
+	<?php } ?>
+	</tbody>
+</table>
 </form>

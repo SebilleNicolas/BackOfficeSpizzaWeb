@@ -110,7 +110,7 @@ Liste des pizzas :
 			<img src="<?php echo $ListePizza[$i]["Image"]?>"/>
 			</td>
 			<td>
-				<?php $compose_pizza = composePizza($ListePizza[$i]["CodePizza"]); 
+				<?php $compose_pizza = selectPizza($ListePizza[$i]["CodePizza"]); 
 // var_dump($compose_pizza);exit;?>
 			<?php if(count($compose_pizza) > 0) {?> 
 			<select>

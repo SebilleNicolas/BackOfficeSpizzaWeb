@@ -11,29 +11,8 @@
 	transform: scaleY(0);
 	transform-origin: 50% 0;
 	transition:transform 1s ease;
-	 background-color: dodgerblue;
-	 margin-top: auto;
 }
-.accordeon:hover p.aj{
-     transform: scaleY(1);
-}
-.accordeon:hover p.liste{
-     transform: scaleY(1);
-}
-.accordeon2{
-     width:250px;
-}
-.accordeon2 p{
-	transform: scaleY(0);
-	transform-origin: 50% 0;
-	transition:transform 1s ease;
-	 background-color: dodgerblue;
-	 margin-top: auto;
-}
-.accordeon2:hover p.aj{
-     transform: scaleY(1);
-}
-.accordeon2:hover p.liste{
+.accordeon:hover p{
      transform: scaleY(1);
 }
 
@@ -134,17 +113,19 @@ footer{
 
 /****** Div Contenu ******/
 div.contenu{
-background-color: 						white;
+/* Couleur a fond blanc */
+	background-color: 						white;
 /* Bordure (type et couleur) */
 	border: 								0.3em solid #80B2E6;
 /* Dimension */
-	/* width: 									90em; */
+	width: 									90em;
 	min-height: 							65em;
 /* Alignement/espacement */
 	margin: 								auto;
-	/* padding: 								5em; */
-	/* margin-bottom: 							2.5em; */
-	/* margin-top: 							2.5em; */
+	
+	padding: 								5em;
+	margin-bottom: 							2.5em;
+	margin-top: 							2.5em;
 /* Bordure */
 	border-radius: 							2.5em;
 /* Ombre (Horrizontale,Verticale,adoucissement du degradé,couleur de l'ombre) */

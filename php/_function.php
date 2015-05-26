@@ -615,7 +615,7 @@ function ConsulterDessert($CodeDessert)
 	
 	return $result;
 }
-function composePizza($codePizza)
+function selectPizza($codePizza)
 {
 $pdo = connexion();
 	
@@ -1413,6 +1413,61 @@ function listePate()
 }
 
 /************** Fonction d'obention d'une Pate **************/
+function afficheSalade($CodeSalade)
+{
+	mb_internal_encoding('UTF-8');
+	$result = false;
+	
+	$pdo = connexion();
+	
+	
+	
+	if($pdo != false)
+	{
+		
+		$affichePizza = "
+						SELECT *
+						FROM salade
+						WHERE CodeSalade = '".$CodeSalade."'
+						
+					";
+		//mysql_query("SET NAMES 'utf8'");
+		$result = $pdo -> query($affichePizza)->fetch();
+		
+	}
+
+	return $result;
+		
+}
+/************** Fonction d'obention d'une Pate **************/
+function affichePizza($CodePizza)
+{
+	mb_internal_encoding('UTF-8');
+	$result = false;
+	
+	$pdo = connexion();
+	
+	
+	
+	if($pdo != false)
+	{
+		
+		$affichePizza = "
+						SELECT *
+						FROM pizza
+						WHERE CodePizza = '".$CodePizza."'
+						
+					";
+		//mysql_query("SET NAMES 'utf8'");
+		$result = $pdo -> query($affichePizza)->fetch();
+		
+	}
+
+	return $result;
+		
+}
+
+/************** Fonction d'obention d'une Pate **************/
 function affichePate($CodePate)
 {
 	mb_internal_encoding('UTF-8');
@@ -1496,6 +1551,61 @@ function listeIngredientdispo($CodePate)
 		
 }
 
+/************** Fonction d'obention des Ingredients dispo pour la Pate cree **************/
+function listeIngredientdispoSalade($CodeSalade)
+{
+	mb_internal_encoding('UTF-8');
+	$result = false;
+	
+	$pdo = connexion();
+	
+	
+	
+	if($pdo != false)
+	{
+		
+		$listeIngredientdispo = "
+						SELECT CodeIngredient, NomIngredient
+						FROM ingredient 
+						WHERE CodeIngredient NOT IN (SELECT NumIngredient FROM compose_salade WHERE CodeSalade= '".$CodeSalade."')
+						
+					";
+		//mysql_query("SET NAMES 'utf8'");
+		$result = $pdo -> query($listeIngredientdispo)->fetchall();
+		
+	}
+
+	return $result;
+		
+}
+
+/************** Fonction d'obention des Ingredients dispo pour la Pate cree **************/
+function listeIngredientdispoPizza($CodePizza)
+{
+	mb_internal_encoding('UTF-8');
+	$result = false;
+	
+	$pdo = connexion();
+	
+	
+	
+	if($pdo != false)
+	{
+		
+		$listeIngredientdispo = "
+						SELECT CodeIngredient, NomIngredient
+						FROM ingredient 
+						WHERE CodeIngredient NOT IN (SELECT NumIngredient FROM compose_pizza WHERE CodePizza= '".$CodePizza."')
+						
+					";
+		$result = $pdo -> query($listeIngredientdispo)->fetchall();
+		
+	}
+
+	return $result;
+		
+}
+
 /************** Fonction d'obention des Ingredients pour une Pate **************/
 function listeIngredientPate($CodePate)
 {
@@ -1524,7 +1634,61 @@ mb_internal_encoding('UTF-8');
 	return $result;
 		
 }
+/************** Fonction d'obention des Ingredients pour une Pate **************/
+function listeIngredientPizza($CodePizza)
+{
 
+mb_internal_encoding('UTF-8');
+	$result = false;
+	
+	$pdo = connexion();
+	
+	
+	
+	if($pdo != false)
+	{
+		
+		$listeIngredientPate = "
+						SELECT CodeIngredient, NomIngredient
+						FROM ingredient 
+						WHERE CodeIngredient IN (SELECT NumIngredient FROM compose_pizza WHERE CodePizza= '".$CodePizza."')
+						
+					";
+		//mysql_query("SET NAMES 'utf8'");
+		$result = $pdo -> query($listeIngredientPate)->fetchall();
+		
+	}
+
+	return $result;
+		
+}
+function listeIngredientSalade($CodeSalade)
+{
+
+mb_internal_encoding('UTF-8');
+	$result = false;
+	
+	$pdo = connexion();
+	
+	
+	
+	if($pdo != false)
+	{
+		
+		$listeIngredientPate = "
+						SELECT CodeIngredient, NomIngredient
+						FROM ingredient 
+						WHERE CodeIngredient IN (SELECT NumIngredient FROM compose_salade WHERE CodeSalade= '".$CodeSalade."')
+						
+					";
+		//mysql_query("SET NAMES 'utf8'");
+		$result = $pdo -> query($listeIngredientPate)->fetchall();
+		
+	}
+
+	return $result;
+		
+}
 /************** Fonction de création d'une Pate **************/
 function creePate($NomPate, $PrixPate, $Image)
 {
@@ -1591,6 +1755,72 @@ function composePate($CodePate, $CodeIngredient)
 	
 }
 
+/************** Fonction de composition d'une Pate **************/
+function composePizza($CodePizza, $CodeIngredient)
+{
+
+	$reussi = false;
+		
+	$pdo = connexion();
+
+	if($pdo != false)
+	{
+		
+		
+		$insert = "
+					INSERT INTO compose_pizza
+					VALUES ( '".$CodePizza."', '".$CodeIngredient."')
+					";
+					
+					
+		$res = $pdo -> exec($insert);
+
+		
+		if($res == 1)
+		{
+		
+			$reussi = true;
+		
+		}
+	}
+	
+	return $reussi;
+	
+}
+
+
+/************** Fonction de composition d'une Pate **************/
+function composeSalade($CodeSalade, $CodeIngredient)
+{
+
+	$reussi = false;
+		
+	$pdo = connexion();
+
+	if($pdo != false)
+	{
+		
+		
+		$insert = "
+					INSERT INTO compose_salade
+					VALUES ( '".$CodeSalade."', '".$CodeIngredient."')
+					";
+					
+					
+		$res = $pdo -> exec($insert);
+
+		
+		if($res == 1)
+		{
+		
+			$reussi = true;
+		
+		}
+	}
+	
+	return $reussi;
+	
+}
 /************** Fonction de modification d'une Pate **************/
 function modPate($CodePate, $NomPate, $PrixPate, $Image)
 {
@@ -1681,6 +1911,60 @@ function suprIngredientPate($CodePate, $CodeIngredient)
 			$delete = "
 					DELETE FROM compose_pate
 					WHERE CodePate = '".$CodePate."' AND NumIngredient =  '".$CodeIngredient."'
+
+					";
+					
+					
+		$res = $pdo -> exec($delete);
+		
+		if($res == 1)
+		{
+			$reussi = true;
+		}
+	}
+	
+	return $reussi;
+}
+
+/************** Fonction de suppression d'un ingredient d'une Pate **************/
+function suprIngredientSalade($CodeSalade, $CodeIngredient)
+{
+	$reussi = false;
+		
+	$pdo = connexion();
+
+	if($pdo != false)
+	{
+			$delete = "
+					DELETE FROM compose_salade
+					WHERE CodeSalade = '".$CodeSalade."' AND NumIngredient =  '".$CodeIngredient."'
+
+					";
+					
+					
+		$res = $pdo -> exec($delete);
+		
+		if($res == 1)
+		{
+			$reussi = true;
+		}
+	}
+	
+	return $reussi;
+}
+
+/************** Fonction de suppression d'un ingredient d'une Pate **************/
+function suprIngredientPizza($CodePizza, $CodeIngredient)
+{
+	$reussi = false;
+		
+	$pdo = connexion();
+
+	if($pdo != false)
+	{
+			$delete = "
+					DELETE FROM compose_pizza
+					WHERE CodePizza = '".$CodePizza."' AND NumIngredient =  '".$CodeIngredient."'
 
 					";
 					

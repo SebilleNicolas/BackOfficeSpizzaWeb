@@ -34,7 +34,7 @@ header('Content-Type: text/html; charset=UTF-8');
 	
 		$NomPizza = $_REQUEST['NouvellePizza'];
 		// Mettre le name dans le input type file *****************************************************************************
-
+		
 		$Image = $_REQUEST['NouvelleImage'];
 		// var_dump($Image);exit;
 		
@@ -60,11 +60,11 @@ header('Content-Type: text/html; charset=UTF-8');
 
 		echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
 		
-		
+		// header( 'Refresh:2; url=AjouterIngredientPizza.php');
 		
 
 	// header("Location:  AjouterPizza.php?id=".$id."&IdInter=");
-	// header("Location:  AjouterPizza.php");
+	header("Location:  AjouterIngredientPizza.php");
 	
 	}
 	}
@@ -82,7 +82,7 @@ header('Content-Type: text/html; charset=UTF-8');
 	Login : <?php echo $_SESSION["user"];  //var_dump( $_SESSION);?>
 		</br>
 		<h2 align="center">
-		Ajouter pizzas
+		Ajouter pizzasazdazd
 		</h2>
 	</h2>
 	</br>
@@ -92,7 +92,7 @@ header('Content-Type: text/html; charset=UTF-8');
 </br></br>
 
 </br></br>
-<form method="POST" action="AjouterPizza.php">
+<form method="POST" action="ajouterPizza.php">
 	<table class="ficheCourante" align="center">
 
 		<thead class="thead">			
