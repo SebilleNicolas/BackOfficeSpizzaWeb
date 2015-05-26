@@ -52,10 +52,10 @@ header('Content-Type: text/html; charset=UTF-8');
 		// $reussi = creePizza($NomPizza, $Ingredient, $Prix);
 
 
-		if($reussi = false){$message='Erreur fiche non ajouter';}
+		if($reussi = false){$message='Erreur pizza non ajouter';}
 		
 		
-		if($reussi = true){$message='La fiche a été ajouter';}
+		if($reussi = true){$message='La pizza a été ajouter';}
 		
 
 		echo '<script type="text/javascript">window.alert("'.$message.'");</script>';

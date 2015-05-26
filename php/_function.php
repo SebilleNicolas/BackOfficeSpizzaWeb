@@ -311,9 +311,96 @@ function listeSalade()
 		
 // }
 
+function listeMenu()
+{
+	mb_internal_encoding('UTF-8');
+	$result = false;
+	
+	$pdo = connexion();
+	
+	
+	
+	if($pdo != false)
+	{
+		
+		$listeMenu = "
+						SELECT *
+						FROM menu
+					";
+		//mysql_query("SET NAMES 'utf8'");
+		$result = $pdo -> query($listeMenu)->fetchall();
+		
+	}
 
+	return $result;
+		
+}
+ 
+function creeMenu($NomMenu, $NbPizzas, $NbPaninis,$NbTexMex,$NbDesserts,$NbSalades,$NbBoissons,$Prix)
+{
 
+	$reussi = false;
+		
+	$pdo = connexion();
+	// var_dump($pdo);
+	if($pdo != false)
+	{
 
+		$NomMenu = $pdo -> quote($NomMenu);
+
+			$insert = '
+					INSERT INTO menu
+					VALUES (null,"'.$NomMenu.'", '.$Prix.', '.$NbPizzas.', '.$NbPaninis.', '.$NbTexMex.', '.$NbDesserts.', '.$NbSalades.', '.$NbBoissons.', 0)
+					';
+		$res = $pdo-> exec($insert);
+					
+
+		
+		if($res == 1)
+		{
+		
+			$reussi = true;
+		
+		}
+	}
+	
+	return $reussi;
+	
+}
+/************** Fonction de suppression d'une sandwich **************/
+function supprimerMenu($CodeMenu)
+{
+
+	$reussi = false;
+	
+	$pdo = connexion();
+	
+	if($pdo != false)
+	{
+	
+		
+
+		
+		$req = "
+					DELETE FROM menu
+					WHERE CodeMenu=$CodeMenu
+					
+				";
+		// var_dump($req);exit;
+		$res = $pdo -> exec($req);
+		
+		if($res == 1)
+		{
+		
+			$reussi = true;
+		
+		}
+		
+	}
+
+	return $reussi;
+
+}
 /************** Fonction de création d'une fiche **************/
 function creePizza($NomPizza, $Ingredient, $Prix , $Image)
 {
@@ -491,7 +578,24 @@ function supprimerPizza($CodePizza)
 	return $reussi;
 
 }
-
+function ConsulterMenu($CodeMenu)
+{
+	
+	$pdo = connexion();
+	
+	if($pdo != false)
+	{
+	$req = "
+			Select * 
+				from menu where CodeMenu = $CodeMenu	
+					";
+					
+			$result =  $pdo -> query($req)->fetch();
+	}
+	
+	
+	return $result;
+}
 /************** Fonction récupérer Sandwich  **************/
 function ConsulterDessert($CodeDessert)
 {
@@ -603,6 +707,49 @@ function ConsulterSalade($CodeSalade)
 	
 	
 	return $result;
+}
+/************** Fonction de modification d'une fiche **************/
+function modifierMenu($NomMenu, $NbPizzas, $NbPaninis,$NbTexMex,$NbDesserts,$NbSalades,$NbBoissons,$Prix,$CodeMenu)
+{
+
+	$modif = false;
+	
+	$pdo = connexion();
+	
+	if($pdo != false)
+	{
+	
+		
+		$NomMenu = $pdo -> quote($NomMenu);
+		
+		
+		$req = "
+					UPDATE menu
+					SET NomMenu = $NomMenu , 
+					NbPizza = $NbPizzas, 
+					NbPanini = $NbPaninis, 
+					NbTexMex = $NbTexMex, 
+					NbDessert = $NbDesserts, 
+					NbSalade = $NbSalades, 
+					NbBoisson = $NbBoissons, 
+					PrixMenu = $Prix	
+					WHERE CodeMenu = $CodeMenu";
+				
+			
+				
+		// var_dump($req);exit;
+		$res = $pdo -> exec($req);
+	
+		if($res == 1)
+		{
+		
+			$modif = true;
+		
+		}
+		
+	}
+
+	return $modif;
 }
 /************** Fonction de modification d'une fiche **************/
 function modifierDessert($CodeDessert,$nom,$image,$prix,$is_img)
