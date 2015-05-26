@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 09 Décembre 2014 à 16:00
+-- Généré le :  Mar 26 Mai 2015 à 10:17
 -- Version du serveur :  5.00.15
 -- Version de PHP :  5.5.12
 
@@ -63,11 +63,19 @@ CREATE TABLE IF NOT EXISTS `adresse` (
 --
 
 CREATE TABLE IF NOT EXISTS `boisson` (
-  ` CodeBoisson` int(11) NOT NULL auto_increment,
+  `CodeBoisson` int(11) NOT NULL auto_increment,
   `NomBoisson` varchar(30) NOT NULL,
   `PrixBoisson` double NOT NULL,
-  PRIMARY KEY  (` CodeBoisson`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  PRIMARY KEY  (`CodeBoisson`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `boisson`
+--
+
+INSERT INTO `boisson` (`CodeBoisson`, `NomBoisson`, `PrixBoisson`) VALUES
+(1, 'Cocaa', 2),
+(2, 'orangina', 3);
 
 -- --------------------------------------------------------
 
@@ -85,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   `idAdresse` int(11) NOT NULL,
   PRIMARY KEY  (`NumClient`),
   KEY `idAdresse` (`idAdresse`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -126,6 +134,27 @@ CREATE TABLE IF NOT EXISTS `compose_panini` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `compose_pate`
+--
+
+CREATE TABLE IF NOT EXISTS `compose_pate` (
+  `CodePate` int(11) NOT NULL,
+  `NumIngredient` int(11) NOT NULL,
+  KEY `NomPate` (`CodePate`,`NumIngredient`),
+  KEY `NumIngredient` (`NumIngredient`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `compose_pate`
+--
+
+INSERT INTO `compose_pate` (`CodePate`, `NumIngredient`) VALUES
+(13, 1),
+(13, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `compose_pizza`
 --
 
@@ -135,6 +164,15 @@ CREATE TABLE IF NOT EXISTS `compose_pizza` (
   KEY `NomPizza` (`CodePizza`,`NumIngredient`),
   KEY `NumIngredient` (`NumIngredient`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `compose_pizza`
+--
+
+INSERT INTO `compose_pizza` (`CodePizza`, `NumIngredient`) VALUES
+(13, 1),
+(13, 2),
+(15, 1);
 
 -- --------------------------------------------------------
 
@@ -159,8 +197,16 @@ CREATE TABLE IF NOT EXISTS `dessert` (
   `CodeDessert` int(11) NOT NULL auto_increment,
   `NomDessert` varchar(30) NOT NULL,
   `PrixDessert` double NOT NULL,
+  `image` varchar(50) NOT NULL,
   PRIMARY KEY  (`CodeDessert`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `dessert`
+--
+
+INSERT INTO `dessert` (`CodeDessert`, `NomDessert`, `PrixDessert`, `image`) VALUES
+(1, 'aaaaazzz', 44, '..\\images\\TOP.png');
 
 -- --------------------------------------------------------
 
@@ -172,7 +218,15 @@ CREATE TABLE IF NOT EXISTS `ingredient` (
   `CodeIngredient` int(11) NOT NULL auto_increment,
   `NomIngredient` varchar(30) default NULL,
   PRIMARY KEY  (`CodeIngredient`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Contenu de la table `ingredient`
+--
+
+INSERT INTO `ingredient` (`CodeIngredient`, `NomIngredient`) VALUES
+(1, 'Jambon'),
+(2, 'Gruyere');
 
 -- --------------------------------------------------------
 
@@ -218,7 +272,36 @@ CREATE TABLE IF NOT EXISTS `panini` (
   `NomPanini` varchar(30) NOT NULL,
   `PrixPanini` double NOT NULL,
   PRIMARY KEY  (`CodePanini`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `panini`
+--
+
+INSERT INTO `panini` (`CodePanini`, `NomPanini`, `PrixPanini`) VALUES
+(1, 'jambon', 5),
+(2, 'Nutella', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `pate`
+--
+
+CREATE TABLE IF NOT EXISTS `pate` (
+  `CodePate` int(11) NOT NULL auto_increment,
+  `NomPate` varchar(30) NOT NULL,
+  `PrixPate` float NOT NULL,
+  `Image` varchar(50) NOT NULL,
+  PRIMARY KEY  (`CodePate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+
+--
+-- Contenu de la table `pate`
+--
+
+INSERT INTO `pate` (`CodePate`, `NomPate`, `PrixPate`, `Image`) VALUES
+(13, 'bbbazdazd', 5, '  ..\\images\\pizza1.jpg');
 
 -- --------------------------------------------------------
 
@@ -230,9 +313,18 @@ CREATE TABLE IF NOT EXISTS `pizza` (
   `CodePizza` int(11) NOT NULL auto_increment,
   `NomPizza` varchar(30) NOT NULL,
   `Prix` float NOT NULL,
+  `Image` varchar(50) NOT NULL,
   PRIMARY KEY  (`CodePizza`),
   KEY `NomPizza` (`NomPizza`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+
+--
+-- Contenu de la table `pizza`
+--
+
+INSERT INTO `pizza` (`CodePizza`, `NomPizza`, `Prix`, `Image`) VALUES
+(13, 'Vegetarienne', 88, '..\\images\\TOP.png'),
+(15, 'azdazdazd', 88, '..\\images\\pizza3.jpg');
 
 -- --------------------------------------------------------
 
@@ -243,9 +335,40 @@ CREATE TABLE IF NOT EXISTS `pizza` (
 CREATE TABLE IF NOT EXISTS `salade` (
   `CodeSalade` int(11) NOT NULL auto_increment,
   `NomSalade` varchar(30) NOT NULL,
-  `PrixPanini` double NOT NULL,
+  `PrixSalade` double NOT NULL,
+  `image` varchar(50) NOT NULL,
   PRIMARY KEY  (`CodeSalade`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Contenu de la table `salade`
+--
+
+INSERT INTO `salade` (`CodeSalade`, `NomSalade`, `PrixSalade`, `image`) VALUES
+(1, 'vegetarienne', 11, ''),
+(2, 'olive', 8, ''),
+(4, 'test ajout', 22, '..\\images\\pizza1.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `sandwich`
+--
+
+CREATE TABLE IF NOT EXISTS `sandwich` (
+  `CodeSandwich` int(11) NOT NULL auto_increment,
+  `NomSandwich` varchar(30) NOT NULL,
+  `Prix` int(11) NOT NULL,
+  `image` varchar(50) NOT NULL,
+  PRIMARY KEY  (`CodeSandwich`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `sandwich`
+--
+
+INSERT INTO `sandwich` (`CodeSandwich`, `NomSandwich`, `Prix`, `image`) VALUES
+(1, 'aaazz', 22, '..\\images\\');
 
 -- --------------------------------------------------------
 
@@ -314,31 +437,38 @@ ALTER TABLE `client`
 -- Contraintes pour la table `commande`
 --
 ALTER TABLE `commande`
-  ADD CONSTRAINT `commande_ibfk_5` FOREIGN KEY (`NumClient`) REFERENCES `client` (`NumClient`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `commande_ibfk_2` FOREIGN KEY (`CodePizza`) REFERENCES `pizza` (`CodePizza`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `commande_ibfk_3` FOREIGN KEY (`CodeLivreur`) REFERENCES `livreur` (`CodeLivreur`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `commande_ibfk_4` FOREIGN KEY (`CodeTarification`) REFERENCES `tarification` (`CodeTarification`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `commande_ibfk_4` FOREIGN KEY (`CodeTarification`) REFERENCES `tarification` (`CodeTarification`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `commande_ibfk_5` FOREIGN KEY (`NumClient`) REFERENCES `client` (`NumClient`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `compose_panini`
 --
 ALTER TABLE `compose_panini`
-  ADD CONSTRAINT `compose_panini_ibfk_2` FOREIGN KEY (`NumIngredient`) REFERENCES `ingredient` (`CodeIngredient`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `compose_panini_ibfk_1` FOREIGN KEY (`CodePanini`) REFERENCES `panini` (`CodePanini`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `compose_panini_ibfk_1` FOREIGN KEY (`CodePanini`) REFERENCES `panini` (`CodePanini`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `compose_panini_ibfk_2` FOREIGN KEY (`NumIngredient`) REFERENCES `ingredient` (`CodeIngredient`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `compose_pate`
+--
+ALTER TABLE `compose_pate`
+  ADD CONSTRAINT `compose_pate_ibfk_1` FOREIGN KEY (`CodePate`) REFERENCES `pate` (`CodePate`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `compose_pate_ibfk_2` FOREIGN KEY (`NumIngredient`) REFERENCES `ingredient` (`CodeIngredient`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `compose_pizza`
 --
 ALTER TABLE `compose_pizza`
-  ADD CONSTRAINT `compose_pizza_ibfk_2` FOREIGN KEY (`CodePizza`) REFERENCES `pizza` (`CodePizza`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `compose_pizza_ibfk_1` FOREIGN KEY (`NumIngredient`) REFERENCES `ingredient` (`CodeIngredient`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `compose_pizza_ibfk_1` FOREIGN KEY (`NumIngredient`) REFERENCES `ingredient` (`CodeIngredient`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `compose_pizza_ibfk_2` FOREIGN KEY (`CodePizza`) REFERENCES `pizza` (`CodePizza`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `compose_salade`
 --
 ALTER TABLE `compose_salade`
-  ADD CONSTRAINT `compose_salade_ibfk_2` FOREIGN KEY (`NumIngredient`) REFERENCES `ingredient` (`CodeIngredient`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `compose_salade_ibfk_1` FOREIGN KEY (`CodeSalade`) REFERENCES `salade` (`CodeSalade`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `compose_salade_ibfk_1` FOREIGN KEY (`CodeSalade`) REFERENCES `salade` (`CodeSalade`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `compose_salade_ibfk_2` FOREIGN KEY (`NumIngredient`) REFERENCES `ingredient` (`CodeIngredient`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -4,6 +4,18 @@
 /************ Page ************/
 
 
+.accordeon{
+     width:250px;
+}
+.accordeon p{
+	transform: scaleY(0);
+	transform-origin: 50% 0;
+	transition:transform 1s ease;
+}
+.accordeon:hover p{
+     transform: scaleY(1);
+}
+
 /* image de fond de la page */
 body{
 	
@@ -14,6 +26,10 @@ body{
 	opacity: 0.8;
 	
 }
+
+
+
+
 
 #SA_DATE_ACTION {
 width: 88px;
@@ -666,7 +682,9 @@ input#valider{
 	background: linear-gradient( #B0C4DE, #333);
  
 }
-	
+
+
+
 .form .button button:hover{
 	
     transition: all .1s ease-in; 

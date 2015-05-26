@@ -110,7 +110,21 @@ Liste des pizzas :
 			<img src="<?php echo $ListePizza[$i]["Image"]?>"/>
 			</td>
 			<td>
+				<?php $compose_pizza = composePizza($ListePizza[$i]["CodePizza"]); 
+// var_dump($compose_pizza);exit;?>
+			<?php if(count($compose_pizza) > 0) {?> 
+			<select>
 			
+			<?php	for ($j = 0; $j < count($compose_pizza); $j++) { 
+						$ingredient = selectIngredient($compose_pizza[$j]["NumIngredient"]); 
+						// var_dump($ingredient);exit;
+			?>
+			<option> <?php echo $ingredient["NomIngredient"]; ?> </option>
+			<?php	}	?>
+			</select>
+			<?php } else{ ?>
+			Pas d'ingrédient
+			<?php }?>
 			</td>
 			<td>
 				<input type="submit" name="AjouterIngredient" class="ajouter" value="<?php echo $ListePizza[$i]["CodePizza"] ?>" />

@@ -24,23 +24,23 @@ header('Content-Type: text/html; charset=UTF-8');
 		
 	if(isset($_POST['dd']))
 	{
-	if($_REQUEST['NouvelleIngredient'] == ""){
-	$message='Erreur: Vous devez ajouter un Nom au nouvelle ingredient.';
+	if($_REQUEST['NouvelleBoisson'] == ""){
+	$message='Erreur: Vous devez ajouter un Nom a la nouvelle Boisson.';
 	echo '<script type="text/javascript">window.alert("'.$message.'");</script>';
 	}
 	else{
 	
 			
-		$NomIngredient = $_REQUEST['NouvelleIngredient'];
+		$NomBoisson = $_REQUEST['NouvelleBoisson'];
+		$PrixBoisson = $_REQUEST['NouveauPrix'];
+		//création de la Boisson 
 
-		//création de l'ingredient 
+		$reussi = creeBoisson($NomBoisson, $PrixBoisson);
 
-		$reussi = creeIngredient($NomIngredient);
-
-		if($reussi = false){$message='Erreur Ingredient non ajouter'; echo '<script type="text/javascript">window.alert("'.$message.'");</script>';}
+		if($reussi = false){$message='Erreur Boisson non ajouter'; echo '<script type="text/javascript">window.alert("'.$message.'");</script>';}
 		
 		
-		if($reussi = true){$message='L Ingredient a été ajouter'; echo '<script type="text/javascript">window.alert("'.$message.'");</script>';}
+		if($reussi = true){$message='La Boisson a été ajouter'; echo '<script type="text/javascript">window.alert("'.$message.'");</script>';}
 		
 	
 	}
@@ -59,7 +59,7 @@ header('Content-Type: text/html; charset=UTF-8');
 	Login : <?php echo $_SESSION["user"];  //var_dump( $_SESSION);?>
 		</br>
 		<h2 align="center">
-		Ajouter Ingrédient
+		Ajouter Boisson
 		</h2>
 	</h2>
 	</br>
@@ -69,13 +69,16 @@ header('Content-Type: text/html; charset=UTF-8');
 </br></br>
 
 </br></br>
-<form method="POST" action="AjouterIngredient.php">
+<form method="POST" action="AjouterBoisson.php">
 	<table class="ficheCourante" align="center">
 
 		<thead class="thead">			
 			<tr>
 				<th>
-					Ingredient
+					Boisson
+				</th>
+				<th>
+					Prix
 				</th>
 				<th>
 					Ajouter
@@ -86,7 +89,10 @@ header('Content-Type: text/html; charset=UTF-8');
 		
 			<tr>
 				<td>
-					<input type="text"  style="width: 220px;" name="NouvelleIngredient" class="modification" />
+					<input type="text"  style="width: 220px;" name="NouvelleBoisson" class="modification" />
+				</td>
+				<td>
+					<input type="text"  style="width: 220px;" name="NouveauPrix" class="modification" />
 				</td>				
 				<td>
 					<input type="submit" name="dd" class="ajouter" />
